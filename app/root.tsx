@@ -1,3 +1,6 @@
+// ./app/root.tsx
+
+
 import type { MetaFunction } from "@remix-run/node";
 import {
   Links,
@@ -7,6 +10,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import styles from "./styles/app.css"
 
 // https://remix.run/docs/en/v1/api/conventions#meta
 export const meta: MetaFunction = () => ({
@@ -14,6 +18,10 @@ export const meta: MetaFunction = () => ({
   title: "Remix with Apollo Client",
   viewport: "width=device-width,initial-scale=1",
 });
+
+export const links = () => {
+  return[{rel: "stylesheet", href: styles}]
+}
 
 export default function App() {
   return (
