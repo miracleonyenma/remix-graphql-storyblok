@@ -1,22 +1,30 @@
 import { gql, useQuery } from "@apollo/client";
+import { useStoryblokState, StoryblokComponent } from "@storyblok/react";
 
-const LOCATIONS_QUERY = gql`
-  query GetLocations {
-    locations {
+const PAGEITEMS_QUERY = gql`
+  {
+    PageItem(id: "home-page") {
       id
-      name
-      description
-      photo
+      slug
+      content {
+        _uid
+        component
+        body
+      }
     }
   }
 `;
 
 export default function Index() {
-  const { data } = useQuery(LOCATIONS_QUERY);
+  const { data } = useQuery(PAGEITEMS_QUERY);
 
-  return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      {JSON.stringify(data)}
-    </div>
-  );
+  console.log({ data });
+
+  let story: any = useStoryblokState(data?.PageItem);
+
+  if (!story?.content) {
+    return <div>Loading...</div>;
+  }
+
+  return <StoryblokComponent blok={story.content} />;
 }

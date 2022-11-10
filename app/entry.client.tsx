@@ -6,7 +6,7 @@ function Client() {
   const client = new ApolloClient({
     // `restore` rehydrates the cache so it will match the cache on the server
     cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
-    uri: "https://flyby-gateway.herokuapp.com/",
+    uri: "https://gapi.storyblok.com/v1/api",
   });
 
   return (

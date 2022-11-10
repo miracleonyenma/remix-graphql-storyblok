@@ -5,8 +5,9 @@
     "build": "npm run build:css && remix build",
     "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
     "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
-    "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
-    "start": "remix-serve build"
+    "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css --watch",
+    "start": "remix-serve build",
+    "proxy": "mkcert -install && mkcert localhost && local-ssl-proxy --source 3010 --target 3000 --cert localhost.pem --key localhost-key.pem"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@remix-run/dev": "^1.6.5",
     "@remix-run/eslint-config": "^1.6.5",
+    "@tailwindcss/typography": "^0.5.7",
     "@types/react": "^17.0.47",
     "@types/react-dom": "^17.0.17",
     "autoprefixer": "^10.4.12",

@@ -1,6 +1,44 @@
-
 /* ./styles/app.css */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  @apply bg-slate-100 text-slate-800;
+}
+
+.img-cont {
+  @apply transform relative;
+}
+
+.img-cont img {
+  @apply w-full h-full object-cover;
+}
+
+.site-header {
+  @apply sticky top-0 left-0 w-full bg-white shadow-md;
+}
+
+.site-header .wrapper {
+  @apply flex gap-8 justify-between p-4;
+}
+
+.site-nav .links {
+  @apply flex gap-4;
+}
+.article-hero-header {
+  @apply flex flex-col gap-8;
+}
+
+.article-hero-header .details {
+  @apply  flex flex-col gap-2 p-8 pt-0 max-w-5xl m-auto;
+}
+
+.article-list-section > .wrapper{
+  @apply  transform -translate-y-28 max-w-4xl m-auto p-8;
+}
+
+.article-list {
+  @apply grid grid-cols-3;
+}

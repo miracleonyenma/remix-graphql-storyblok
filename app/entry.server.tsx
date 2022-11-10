@@ -5,7 +5,9 @@ import {
   ApolloProvider,
   ApolloClient,
   InMemoryCache,
-  createHttpLink,
+  HttpLink,
+  ApolloLink,
+  concat,
 } from "@apollo/client";
 import { getDataFromTree } from "@apollo/client/react/ssr";
 
@@ -15,14 +17,24 @@ export default function handleRequest(
   responseHeaders: Headers,
   remixContext: EntryContext
 ) {
+  const httpLink = new HttpLink({ uri: "https://gapi.storyblok.com/v1/api" });
+
+  const authMiddleware = new ApolloLink((operation, forward) => {
+    operation.setContext(({ headers = {} }) => ({
+      headers: {
+        ...headers,
+        token: process.env.STORYBLOK_API_TOKEN,
+        version: "draft",
+      },
+    }));
+
+    return forward(operation);
+  });
+
   const client = new ApolloClient({
     ssrMode: true,
     cache: new InMemoryCache(),
-    link: createHttpLink({
-      uri: "https://flyby-gateway.herokuapp.com/", // from Apollo Odyssey's Voyage tutorial series (https://www.apollographql.com/tutorials/voyage-part1/)
-      headers: request.headers,
-      credentials: request.credentials ?? "include",
-    }),
+    link: concat(authMiddleware, httpLink),
   });
 
   const App = (
